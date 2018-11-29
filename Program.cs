@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 namespace SROMLab1 {
     class Program {
         static void Main(string[] args) {
-            string one = "1";
-            string zero = "0";
-            var one_32 = new ulong[16];
-            var zero_32 = new ulong[16];
-            ToArr(one, one_32);
-            ToArr(zero, zero_32);
             string a = "95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
             string b = "DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
             string c = "BFAFB3728B85B300F5AC85C52198659F903E1DAC8DF57600B0955C300AB850AC";
@@ -52,7 +46,7 @@ namespace SROMLab1 {
             while (a.Length != 128) {
                 a = z + a;
             }
-            for (int i = 0; i < a.Length; i += 8) { //расскладываем первое число в массив
+            for (int i = 0; i < a.Length; i += 8) { 
                 p_32[i / 8] = Convert.ToUInt64(a.Substring(i, 8), 16);
                 a_32[i / 8] = p_32[i / 8];
             }
