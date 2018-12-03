@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace SROMLab1 {
     class Program {
         static void Main(string[] args) {
-            string a = "2"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
-            string b = "A";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
+            string a = "95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
+            string b = "DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
             string c = "BFAFB3728B85B300F5AC85C52198659F903E1DAC8DF57600B0955C300AB850AC";
             string qwe = "1";
             ulong[] one = new ulong[32];
@@ -20,7 +20,7 @@ namespace SROMLab1 {
             ToArr(b, b_32);
             ToArr(c, c_32);
 
-            Console.WriteLine("Addition:");
+            /*Console.WriteLine("Addition:");
             ToStr(Addition(a_32, b_32));
             Console.WriteLine("Need:");
             Console.WriteLine("A37A7B1BC467F960548EEF9C8A8B7F4EDEA8D11AC14B697BA10A6CD8DA51D468");
@@ -35,7 +35,7 @@ namespace SROMLab1 {
             Console.WriteLine("Need:");
             Console.WriteLine("7FEF87293F4C7B226F213FC1F514F757467D8D2A4709F6C2487829662D3DEA0DD9A194814A28DD80E3E65F8F21EAEDBEFB85C28F3023F69284970E168DFA437");
 
-            /*Console.WriteLine("\nDivision:");
+            Console.WriteLine("\nDivision:");
             ToStr(Division(a_32, b_32));
             Console.WriteLine("Need:");
             Console.WriteLine("A");*/
@@ -78,11 +78,12 @@ namespace SROMLab1 {
         }
 
         public static ulong[] Addition(ulong[] a_32, ulong[] b_32) {
-            var c = new ulong[a_32.Length];
+            var maxlenght = Math.Max(a_32.Length, b_32.Length);
+            var c = new ulong[maxlenght];
             ulong carry = 0;
             for (var i = 0; i < a_32.Length; i++) {
-                var t = a_32[i] + b_32[i] + carry;
-                carry = (t >> 32) & 1;
+                ulong t = a_32[i] + b_32[i] + carry;
+                carry = t >> 32;
                 c[i] = t & 0xffffffff;
             }
             return c;
@@ -107,7 +108,8 @@ namespace SROMLab1 {
 
         public static ulong[] Multiply(ulong[] a_32, ulong[] b_32) {
             ulong carry = 0;
-            var c = new ulong[64];
+            var maxlenght = Math.Max(a_32.Length, b_32.Length);
+            var c = new ulong[maxlenght];
             for (int i = 0; i < a_32.Length; i++) {
                 carry = 0;
                 for (int j = 0; j < b_32.Length; j++) {
@@ -120,11 +122,11 @@ namespace SROMLab1 {
             return c;
         }
 
-        /*public static ulong[] Division(ulong[] a_32, ulong[] b_32) {
+        public static ulong[] Division(ulong[] a_32, ulong[] b_32) {
             var b = new ulong[32];
             int k = BitLength(b_32);
             var x = a_32;
-            var q = new ulong[128];
+            var q = new ulong[32];
             while (Cmp(x, b_32) >= 0) {
                 int t = BitLength(x);
                 b = ShiftBitsToHigh(b_32, t - k);
@@ -136,14 +138,13 @@ namespace SROMLab1 {
                 q = SetBit(q, t - k); // result
             }
             return q;
-        }*/
+        }
 
 
         public static ulong[] Gorner(ulong[] a_32, ulong[] b_32, ulong[] one, string b) {
             ulong[][] D = new ulong[15][];
             int m = b.Length;
             ulong[] C = new ulong[64];
-            //for (i=0, i<one.Length, i++)
             D[0] = one;
             D[1] = a_32;
             for (int i = 2; i <= 15; i++) {
@@ -163,7 +164,7 @@ namespace SROMLab1 {
 
 
         // for DIVISION
-        /*public static int BitLength(ulong[] b_32) {
+        public static int BitLength(ulong[] b_32) {
             var bits = 0;
             var index = HighNotZero(b_32);
             var temp = b_32[index];
@@ -184,9 +185,10 @@ namespace SROMLab1 {
 
         public static ulong[] ShiftBitsToHigh(ulong[] b_32, int shift_num) {
             if (shift_num == 0) { return b_32; };
-            var c = new ulong[128];
-            var surrogate = new ulong[32];
-            Array.Copy(b_32, surrogate, b_32.Length);
+            var c = new ulong[32];
+            //var surrogate = new ulong[32];
+            //Array.Copy(b_32, surrogate, b_32.Length);
+            var surrogate = b_32;
             int shift;
             while (shift_num > 0) {
                 c = new ulong[surrogate.Length + 1];
@@ -219,7 +221,7 @@ namespace SROMLab1 {
             temp[0] = 1;
             temp = ShiftBitsToHigh(temp, position);
             return Addition(a_32, temp);
-        }*/
+        }
 
     }
 }
