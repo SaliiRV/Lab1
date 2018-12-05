@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace SROMLab1 {
     class Program {
         static void Main(string[] args) {
-            string a = "2"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
-            string b = "a";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
+            string a = "f"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
+            string b = "3";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
             string sone = "1";
             a = CorrLength(a);
             b = CorrLength(b);
@@ -20,7 +20,7 @@ namespace SROMLab1 {
             a_32 = ToArr(a, a_32);
             b_32 = ToArr(b, b_32);
 
-           /* Console.WriteLine("Addition:");
+            Console.WriteLine("Addition:");
             ToStr(Addition(a_32, b_32));
             Console.WriteLine("Need:");
             Console.WriteLine("A37A7B1BC467F960548EEF9C8A8B7F4EDEA8D11AC14B697BA10A6CD8DA51D468");
@@ -38,7 +38,7 @@ namespace SROMLab1 {
             Console.WriteLine("\nDivision:");
             ToStr(Division(a_32, b_32));
             Console.WriteLine("Need:");
-            Console.WriteLine("A");*/
+            Console.WriteLine("A");
 
             Console.WriteLine("\nGorner:");
             ToStr(Gorner(a_32, b_32, one, b));
