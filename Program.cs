@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 namespace SROMLab1 {
     class Program {
         static void Main(string[] args) {
-            string a = "16D4CA8"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
-            string b = "81";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
-            string sone = "1";
+            string a = "16D4CA8";
+            string b = "81";
             a = CorrLength(a);
             b = CorrLength(b);
-            sone = CorrLength(sone);
-            ulong[] one = new ulong[sone.Length / 8];
-            ToArr(sone, one);
             var a_32 = new ulong[a.Length / 8];
             var b_32 = new ulong[b.Length / 8];
             a_32 = ToArr(a, a_32);
@@ -22,28 +18,18 @@ namespace SROMLab1 {
 
             Console.WriteLine("Addition:");
             ToStr(Addition(a_32, b_32));
-            Console.WriteLine("Need:");
-            Console.WriteLine("A37A7B1BC467F960548EEF9C8A8B7F4EDEA8D11AC14B697BA10A6CD8DA51D468");
 
             Console.WriteLine("\nSubtraction:");
             ToStr(Subtraction(a_32, b_32));
-            Console.WriteLine("Need:");
-            Console.WriteLine("8826DDD0F4720A82605CADA61EC938390DC3BA24636F6288A9B581E2CD091D4A");
             
             Console.WriteLine("\nMultiply:");
             ToStr(Multiply(a_32, b_32));
-            Console.WriteLine("Need:");
-            Console.WriteLine("7FEF87293F4C7B226F213FC1F514F757467D8D2A4709F6C2487829662D3DEA0DD9A194814A28DD80E3E65F8F21EAEDBEFB85C28F3023F69284970E168DFA437");
 
             Console.WriteLine("\nDivision:");
             ToStr(Division(a_32, b_32));
-            Console.WriteLine("Need:");
-            Console.WriteLine("A");
 
             Console.WriteLine("\nGorner:");
-            ToStr(Gorner(a_32, b_32, one, b));
-            Console.WriteLine("Need:");
-
+            ToStr(Gorner(a_32, b_32, b));
             
             Console.ReadKey();
             Console.ReadKey();
@@ -98,7 +84,7 @@ namespace SROMLab1 {
                 carry = t >> 32;
                 c[i] = t & 0xffffffff;
             }
-            RHZ(c);
+            c = RHZ(c);
             return c;
         }
 
@@ -119,7 +105,7 @@ namespace SROMLab1 {
                     borrow = 0;
                 }
             }
-            //RHZ(c);
+            c = RHZ(c);
             return c;
         }
 
@@ -163,7 +149,7 @@ namespace SROMLab1 {
             return q;
         }
 
-        public static ulong[] Gorner(ulong[] a_32, ulong[] b_32, ulong[] one, string b) {
+        public static ulong[] Gorner(ulong[] a_32, ulong[] b_32, string b) {
             ulong[][] D = new ulong[16][];
             int m = b.Length;
             int k = 0;
@@ -187,7 +173,7 @@ namespace SROMLab1 {
                     }
                 }
             }
-            RHZ(C);
+            C = RHZ(C);
             return C;
         }
 
