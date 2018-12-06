@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace SROMLab1 {
     class Program {
         static void Main(string[] args) {
-            string a = "f"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
-            string b = "3";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
+            string a = "16D4CA8"; //"95D0AC765C6D01F15A75CEA154AA5BC3F636459F925D6602255FF75DD3AD78D9";
+            string b = "81";//"DA9CEA567FAF76EFA1920FB35E1238AE8728B7B2EEE03797BAA757B06A45B8F";
             string sone = "1";
             a = CorrLength(a);
             b = CorrLength(b);
@@ -49,10 +49,8 @@ namespace SROMLab1 {
             Console.ReadKey();
         }
 
-        //work
         public static string CorrLength(string a) { 
             string z = "0";
-            //var b = a;
             while (a.Length % 8 != 0) {
                 a = z + a;
             }
@@ -60,7 +58,8 @@ namespace SROMLab1 {
         }
 
         public static ulong[] RHZ(ulong[] a_32) {
-            int i = a_32.Length - 1;
+            int l = a_32.Length;
+            int i = l - 1;
             while (a_32[i] == 0) { i--; }
             var r = new ulong[i + 1];
             Array.Copy(a_32, r, i + 1);
@@ -139,7 +138,7 @@ namespace SROMLab1 {
                 }
                 c[i + a_32.Length] = carry;
             }
-            //RHZ(c);
+            RHZ(c);
             return c;
         }
 
@@ -167,23 +166,28 @@ namespace SROMLab1 {
         public static ulong[] Gorner(ulong[] a_32, ulong[] b_32, ulong[] one, string b) {
             ulong[][] D = new ulong[16][];
             int m = b.Length;
-            ulong[] C = new ulong[32];
-            D[0] = one;
+            int k = 0;
+            ulong[] C = new ulong[1];
+            C[0] = 0x1;
+            D[0] = new ulong[1] { 1 };
             D[1] = a_32;
-            for (int i = 2; i <= 15; i++) {
+            for (int i = 2; i < 16; i++) {
                 D[i] = Multiply(D[i - 1], a_32);
+                D[i] = RHZ(D[i]);
             }
-            for (int j = 0; j <= m; j++) {
+            for (int j = 0; j < m; j++) {
                 var qwer = b[j].ToString();
                 int w = Convert.ToInt32(qwer, 16);
-
                 var v = D[w];
-                C = Multiply(v, C);
-                for (int k = 0; k < 4; k++) {
-                    C = Multiply(C, C);
+                C = Multiply(C, v);
+                if (j != m - 1) {
+                    for ( k = 1; k<= 4; k++) {
+                        C = Multiply(C, C);
+                        C = RHZ(C);
+                    }
                 }
             }
-
+            RHZ(C);
             return C;
         }
 
